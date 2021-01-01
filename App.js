@@ -1,21 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, SafeAreaView, Platform } from 'react-native';
+
+import MainNavigator from './app/navigation/MainNavigator'
+
+import global from './app/config/global';
 
 export default function App() {
+  console.log(Platform.OS);
+  console.log(global.statusBarHeight);
+  console.log(global.bodyHeight);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <MainNavigator></MainNavigator>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: Platform.OS === "android" ? global.statusBarHeight : 0,
   },
 });

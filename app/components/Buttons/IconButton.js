@@ -4,10 +4,10 @@ import { TouchableOpacity } from "react-native";
 import colors from "../../config/colors";
 import styles from "./styles";
 
-function IconButton({children, onPress, bgColor=colors.primary}) {
+function IconButton({children, onPress, style, bgColor=colors.primary}) {
   return (
     <TouchableOpacity
-      style={[styles.iconButton, { backgroundColor: bgColor }]}
+      style={[styles.iconButton, style, { backgroundColor: bgColor }]}
       onPress={onPress}
     >
         {children}

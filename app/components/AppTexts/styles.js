@@ -1,19 +1,19 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet } from "react-native";
+
+import colors from "../../config/colors";
+import global from "../../config/global";
 
 const styles = StyleSheet.create({
     text: {
       fontSize: 16,
-      fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
+      fontFamily: global.primFont
     },
     linkText: {
-      fontSize: 16,
-      fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
+      color: colors.primary
     },
     ptText: {
-      fontSize: 16,
       flexWrap: "wrap",
       flex: 1,
-      fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
     },
     pt: {
       marginRight:15, 

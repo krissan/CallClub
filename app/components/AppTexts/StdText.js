@@ -1,9 +1,11 @@
 import React from "react";
 import { Text } from "react-native";
-import styles from  './styles';
 
-function StdText({ children, style }) {
-  return <Text style={[styles.text, style]}>{children}</Text>;
+import styles from  './styles';
+import colors from '../../config/colors';
+
+function StdText({ children, txtColor=colors.text , style }) {
+  return <Text style={[styles.text, style, {color: txtColor}]}>{children}</Text>;
 }
 
 export default StdText;

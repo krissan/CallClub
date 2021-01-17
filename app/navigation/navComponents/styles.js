@@ -1,4 +1,5 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet } from "react-native";
+
 import colors from '../../config/colors';
 import global from '../../config/global';
 
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
         fontWeight: "normal"
     },
     navBtn: {
-        paddingHorizontal: global.screenPad
+        paddingHorizontal: 10
     }
 })
 

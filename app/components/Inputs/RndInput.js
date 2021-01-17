@@ -4,6 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 
 import colors from '../../config/colors';
 
+//Text input with icon passed through button at the end surrounded by rounded border
 function RndInput({ label, onPress, icon, inpColor=colors.tertiary, phColor=colors.inert, txtColor=colors.text, ...otherProps}) {
     return (
             <View style={{backgroundColor: inpColor, height:40, width:105, alignItems:"center", borderRadius:50, flexDirection: "row", justifyContent:"space-between",}}>

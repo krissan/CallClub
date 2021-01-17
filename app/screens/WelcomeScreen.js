@@ -10,6 +10,9 @@ import IconButton from '../components/Buttons/IconButton';
 
 import colors from '../config/colors';
 import styles from './styles';
+import LinkText from '../components/AppTexts/LinkText';
+import FancyAddressForm from '../components/Inputs/Form/FancyAddressForm';
+import routes from '../navigation/routes';
 
 function WelcomeScreen({navigation}) {
     return (
@@ -21,7 +24,7 @@ function WelcomeScreen({navigation}) {
                 </StdText>
             </View>
             {/* How */}
-            <View style={[styles.box,{backgroundColor: colors.secondary, flex: 3}]}>
+            <View style={[styles.box,{backgroundColor: colors.secondary, flex: 2}]}>
                 <StdText style={[styles.subTitle, {color: colors.tertiary}]}>
                     How?
                 </StdText>
@@ -34,32 +37,19 @@ function WelcomeScreen({navigation}) {
                 <PtText txtColor={colors.tertiary} ptColor={colors.tertiary}>
                 Inform user of elected officials legislative response,  increasing transparency                </PtText>
             </View>
-            {/* Create Account */}
+            {/* Create Account or login */}
             <View style={[styles.centerBox,{backgroundColor: colors.tertiary, flex: 2}]}>
                 <StdText style={[styles.subTitle, {color: colors.secondary}]}>
                     GET STARTED!
                 </StdText>
-                <StdButton title="Create Account" onPress={()=>{console.log("Create Account")}}/>
+                <StdButton title="Create Account" onPress={()=>{navigation.navigate(routes.Register)}}/>
+                <View style={{flexDirection:"column", alignItems:"center", padding:5}}><StdText>Already have an account? </StdText><LinkText onPress={()=>{navigation.navigate(routes.Login)}}>Login Here</LinkText></View>
                 <StdText style={{color: colors.secondary}}>
                     or
                 </StdText>
             </View>
             {/* Enter Address */}
-            <View style={[styles.box, {backgroundColor: colors.secondary, flex: 1}]}>
-                <View style={{flex:1, flexDirection: 'row', maxHeight:60, alignItems:"center"}}>
-                    {/*Input*/}
-                    <View style={{flex:0.8}}>
-                        <FancyInput label="Help us find your riding?" onPress={()=>{console.log("hello")}}  icon="location-on" placeholder="Address..." >
-                        </FancyInput>
-                    </View>
-                    {/*Button*/}
-                    <View style={{flex: 0.1, height: "100%", flexDirection:"column", justifyContent:"flex-end"}}>
-                        <IconButton onPress={()=>{console.log("go")}}>
-                            <MaterialIcons name={"arrow-forward"} size={24} color={colors.tertiary} />
-                        </IconButton>
-                    </View>
-                </View>
-            </View>
+            <FancyAddressForm onSubmit={({address})=>{console.log(Address);navigation.navigate(routes.Issues)}}></FancyAddressForm>
         </View>
     );
 }

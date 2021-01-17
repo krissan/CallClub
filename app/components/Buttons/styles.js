@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { RotationGestureHandler } from "react-native-gesture-handler";
 
 import colors from '../../config/colors';
 import global from '../../config/global';
@@ -9,11 +8,18 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 29,
+    paddingVertical: 15,
     marginVertical: 10,
     paddingHorizontal: 10,
     fontWeight: "bold",
-    width:180
+    width:"100%"
+  },
+  footerButton: {
+    width:"100%", 
+    height:40, 
+    borderRadius:0, 
+    marginVertical:0,
+    paddingVertical:0
   },
   text: {
     fontSize: 17,

@@ -5,34 +5,35 @@ import styles from './styles';
 
 import StdText from '..//AppTexts/StdText';
 import colors from '../../config/colors';
+import global from '../../config/global';
 
-function StdTextInput({ label, inpColor= colors.text, phColor=colors.inert, txtColor=colors.text, touched=false, error, maxLength=100, length, ...otherProps}) {
+function StdTextInput({ label, inpColor= colors.text, phColor=colors.inert, txtColor=colors.text, touched=false, error, maxLength, length, ...otherProps}) {
 
     return (
-        <View style={{paddingBottom:15}}>
+        <View style={{ paddingBottom:global.inputBottomPad}}>
             {/* Header */}
             <View style={{flexDirection:"row", justifyContent:"space-between"}}>
                 {/* Label */}
-                <StdText style={[styles.label,{color: inpColor,fontWeight:"bold"}]}>
+                <StdText txtColor={inpColor} style={[styles.label,{fontWeight:"bold"}]}>
                     {label}
                 </StdText>
                 {/* character count */}
-                <StdText style={[styles.label]}>
+                {maxLength && <StdText style={[styles.label]}>
                     {length+"/"+maxLength}
-                </StdText>
+                </StdText>}
             </View>
             {/* Text input */}
             <View style={[styles.stdField, {borderBottomColor: inpColor}]}>
                 <TextInput style={{color: txtColor, fontSize:18, flex: 9}} {...otherProps} maxLength={maxLength}/>
             </View>
             {/*Display error if touched */}
-            {   touched &&
-                <View style={{alignItems:'flex-end'}}>
-                    <StdText style={[styles.inline, {color:inpColor }]}>
-                        {error}
-                    </StdText>
-                </View>
-            }
+            <View style={{alignItems:'flex-end', height:global.inputBottomHeight }}>
+                {   touched &&
+                <StdText txtColor={inpColor} style={[styles.inline]}>
+                    {error}
+                </StdText>
+                }
+            </View>
         </View>        
     );
 }

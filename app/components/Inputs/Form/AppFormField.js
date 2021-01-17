@@ -4,6 +4,7 @@ import { useFormikContext } from "formik";
 import StdTextInput from "../StdTextInput";
 import colors from "../../../config/colors";
 
+//Form text input field
 function AppFormField({ name, ...otherProps }) {
     const { values, setFieldTouched, handleChange, errors, touched } = useFormikContext();
 
@@ -16,6 +17,7 @@ function AppFormField({ name, ...otherProps }) {
                 length={values[name].length}
                 error={errors[name]}
                 touched={touched[name]}
+                value={values[name]}
                 {...otherProps}
             />
         </>

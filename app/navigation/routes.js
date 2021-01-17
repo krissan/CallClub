@@ -1,7 +1,10 @@
 export default Object.freeze({
-    ISSUE: "Issue",
-    LOGIN: "Login",
-    WELCOME: "Welcome",
-    REGISTER: "Register",
+    Login: "Login",
+    Register: "Register",
+    Welcome: "Welcome",
+    Account: "Account",
+    Issues: "Issues",
+    IssueEditor: "IssueEditor",
+    Representatives: "Representatives"
   });
   

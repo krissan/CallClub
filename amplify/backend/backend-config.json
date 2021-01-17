@@ -1,0 +1,11 @@
+{
+	"auth": {
+		"donewithit2b53b71c": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	},
+	"function": {},
+	"api": {}
+}

@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+
 import colors from '../../config/colors';
 
 const styles = StyleSheet.create({
@@ -14,6 +15,18 @@ const styles = StyleSheet.create({
         height:30, 
         borderBottomWidth: 1,
         paddingLeft:5
+    },
+    stdBox: {
+        height:30, 
+        borderWidth: 1,
+        paddingLeft:5
+    },
+    picker: {
+        marginBottom:global.inputBottomPad,
+        height:40, 
+        justifyContent:"center", 
+        alignItems:"center",
+        borderTopWidth:2, borderBottomWidth:2, borderLeftWidth:1, borderRightWidth:1
     }
 })
 

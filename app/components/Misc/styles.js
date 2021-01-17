@@ -6,7 +6,7 @@ import global from '../../config/global';
 const styles = StyleSheet.create({
     card: {
         backgroundColor: colors.tertiary, 
-        borderRadius: 20,
+        /*borderRadius: 20,*/
         paddingHorizontal: global.screenPad,
     }
 })

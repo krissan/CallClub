@@ -6,7 +6,7 @@ import SubmitIconButton from '../../Inputs/Form/SubmitIconButton';
 import AppForm from './AppForm';
 import AppFormField from './AppFormField';
 
-import useAuth from '../../../auth/useAuth';
+import useAuth from '../../../provider/auth/useAuth';
 
 
 const validationSchema = Yup.object().shape({

@@ -32,10 +32,11 @@ function WelcomeScreen({navigation}) {
                     Key details of this civic issue are packaged in bite sized summaries to inform users
                 </PtText>
                 <PtText txtColor={colors.tertiary} ptColor={colors.tertiary}>
-                Actions are facilitated conveniently through application to make users voice heard
+                    Actions are facilitated conveniently through application to make users voice heard
                 </PtText>
                 <PtText txtColor={colors.tertiary} ptColor={colors.tertiary}>
-                Inform user of elected officials legislative response,  increasing transparency                </PtText>
+                    Inform user of elected officials legislative response,  increasing transparency
+                </PtText>
             </View>
             {/* Create Account or login */}
             <View style={[styles.centerBox,{backgroundColor: colors.tertiary, flex: 2}]}>

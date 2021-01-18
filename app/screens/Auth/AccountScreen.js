@@ -5,7 +5,7 @@ import StdText from '../../components/AppTexts/StdText';
 import FooterButton from '../../components/Buttons/FooterButton';
 import FancyAddressForm from '../../components/Inputs/Form/FancyAddressForm';
 
-import useAuth from '../../auth/useAuth';
+import useAuth from '../../provider/auth/useAuth';
 import global from '../../config/global';
 
 

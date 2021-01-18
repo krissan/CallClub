@@ -1,7 +1,5 @@
 import React, {useEffect} from 'react';
-import { ImageBackground, TextInput, View, StyleSheet } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'
-import { Formik } from 'formik'
+import { View } from 'react-native';
 import * as Yup from 'yup';
 
 import Card from '../../components/Misc/Card';
@@ -11,7 +9,7 @@ import SubmitButton from '../../components/Inputs/Form/SubmitButton'
 import FormSection from '../../components/Misc/FormSection';
 import StdText from '../../components/AppTexts/StdText';
 import LinkText from '../../components/AppTexts/LinkText';
-import useAuth from '../../auth/useAuth';
+import useAuth from '../../provider/auth/useAuth';
 import routes from '../../navigation/routes';
 
 //Login form validation schema

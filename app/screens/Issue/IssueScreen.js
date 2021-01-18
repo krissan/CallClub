@@ -11,7 +11,7 @@ import FormSection from '../../components/Misc/FormSection';
 import FooterButton from '../../components/Buttons/FooterButton';
 
 import colors from '../../config/colors';
-import useAuth from '../../auth/useAuth';
+import useAuth from '../../provider/auth/useAuth';
 import routes from '../../navigation/routes';
 
 

@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import DrawerContent from './navComponents/DrawerContent';
 import BottomTabNavigator from './BottomTabNavigator';
 
-import useAuth from '../auth/useAuth';
+import useAuth from '../provider/auth/useAuth';
 
 const Drawer = createDrawerNavigator();
 

@@ -8,7 +8,7 @@ import IssueNavigator from "./screenNavigators/IssueNavigator";
 import AccountNavigator from "./screenNavigators/AccountNavigator";
 
 import colors from "../config/colors";
-import useAuth from "../auth/useAuth";
+import useAuth from "../provider/auth/useAuth";
 import routes from "./routes";
 
 const Tab = createMaterialBottomTabNavigator();

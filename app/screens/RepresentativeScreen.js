@@ -1,33 +1,34 @@
-import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import React, { useState,useEffect } from 'react';
+import { View,Image,ScrollView } from 'react-native';
 
 import StdText from '../components/AppTexts/StdText';
-import StdButton from '../components/Buttons/StdButton';
 
-import useAuth from '../auth/useAuth';
 import global from '../config/global';
-
+import useAuth from '../provider/auth/useAuth';
+import useReps from '../provider/rep/useReps';
 
 function RepresentativeScreen({navigation}) {
-    const [reps, setReps] = useState([{
-        photo:"imgurl",
-        name: "John Tory", 
-        district:"Toronto", 
-        party:"Conservative", 
-        gender:"Male",
-        number:"555-555-5555", 
-        email:"john.tory@toronto.ca", 
-        website:"Toronto.ca",
-    }]);
+    const auth = useAuth();
+    const gov= useReps();
+
+    //refresh representative data on load
+    useEffect(() => {
+        gov.reloadReps();
+    }, [auth.user.address]);
 
     return(
-        <View style={{padding:global.screenPad}}>
-            <View><StdText>Hello</StdText></View>
-            {reps.map((rep, index) => {
+        <ScrollView style={{padding:global.screenPad}}>
+            {/*Page Header*/}
+            <View><StdText>Representatives</StdText></View>
+            {gov.reps && gov.reps.map((rep, index) => {
                 return(
-                <View key={index}>
-                    <StdText>hello</StdText>
-                    <StdText>{rep.photo}</StdText>
+                //Representative data
+                <View key={index} style={{borderBottomWidth:5, paddingVertical:20}}>
+                    {/*If rep image exists then display it other wise display default image*/}
+                    <Image
+                        style={{height:60,width:60}}
+                        source={(rep.photo != "") ? {uri: rep.photo} : require('../../assets/default_rep.png')} style = {{height: 200, width: 250, resizeMode : 'stretch'}}
+                    />
                     <StdText>{rep.name}</StdText>
                     <StdText>{rep.district}</StdText>
                     <StdText>{rep.party}</StdText>
@@ -37,7 +38,7 @@ function RepresentativeScreen({navigation}) {
                     <StdText>{rep.website}</StdText>
                 </View>);
             })}
-        </View>
+        </ScrollView>
     );
 }
 

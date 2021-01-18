@@ -4,23 +4,22 @@ import { Auth } from "aws-amplify";
 import AuthContext from "./context";
 import authStorage from "./storage";
 
-//define auth context and functions to modify it
+//define auth context and functions to access and modify it
 export default useAuth = () => {
   //define auth context
   const { user, setUser } = useContext(AuthContext);
 
   //update user address attribute in aws
-  const updateAddress = async() => {
+  const updateAddress = async(address) => {
     const user = await Auth.currentAuthenticatedUser();
     await Auth.updateUserAttributes(user, {
-      'address': '105 Main St. New York, NY 10001'
+      'address': address
     });
   }
 
   //sign up user to aws and store token
   const signUp = async(username, password, name, address) => {
     let authToken="sample" //dummy
-
     try {
         const { user } = await Auth.signUp({
             username,
@@ -30,6 +29,7 @@ export default useAuth = () => {
                 address 
             }
         });
+        console.log(user);
         setUser(user);
         authStorage.storeToken(authToken);
 
@@ -70,7 +70,6 @@ export default useAuth = () => {
     try {
       const user = await Auth.currentAuthenticatedUser();
       console.log("check");
-      console.log(user);
       setUser(user);
     } catch (error) {
         console.log('error checking auth: ', error);

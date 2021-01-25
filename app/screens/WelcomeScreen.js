@@ -1,17 +1,14 @@
 import React from 'react';
-import { ImageBackground, TextInput, View, StyleSheet } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'
+import { View } from 'react-native';
 
 import StdText from '../components/AppTexts/StdText';
 import StdButton from '../components/Buttons/StdButton';
 import PtText from '../components/AppTexts/PtText';
-import FancyInput from '../components/Inputs/FancyInput';
-import IconButton from '../components/Buttons/IconButton';
+
 
 import colors from '../config/colors';
 import styles from './styles';
 import LinkText from '../components/AppTexts/LinkText';
-import FancyAddressForm from '../components/Inputs/Form/FancyAddressForm';
 import routes from '../navigation/routes';
 
 function WelcomeScreen({navigation}) {
@@ -24,8 +21,8 @@ function WelcomeScreen({navigation}) {
                 </StdText>
             </View>
             {/* How */}
-            <View style={[styles.box,{backgroundColor: colors.secondary, flex: 2}]}>
-                <StdText style={[styles.subTitle, {color: colors.tertiary}]}>
+            <View style={[styles.box,{backgroundColor: colors.secondary, flex: 2, paddingBottom:10}]}>
+                <StdText style={[styles.subTitle]} txtColor={colors.tertiary}>
                     How?
                 </StdText>
                 <PtText txtColor={colors.tertiary} ptColor={colors.tertiary}>
@@ -45,12 +42,12 @@ function WelcomeScreen({navigation}) {
                 </StdText>
                 <StdButton title="Create Account" onPress={()=>{navigation.navigate(routes.Register)}}/>
                 <View style={{flexDirection:"column", alignItems:"center", padding:5}}><StdText>Already have an account? </StdText><LinkText onPress={()=>{navigation.navigate(routes.Login)}}>Login Here</LinkText></View>
-                <StdText style={{color: colors.secondary}}>
+                {/*<StdText style={{color: colors.secondary}}>
                     or
-                </StdText>
+                </StdText>*/}
             </View>
             {/* Enter Address */}
-            <FancyAddressForm onSubmit={({address})=>{console.log(Address);navigation.navigate(routes.Issues)}}></FancyAddressForm>
+            {/*Address form for non auth*/}
         </View>
     );
 }

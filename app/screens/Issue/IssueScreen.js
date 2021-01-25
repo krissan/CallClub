@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { View } from 'react-native';
-
 
 import Card from '../../components/Misc/Card';
 import HeaderText from '../../components/AppTexts/HeaderText';
@@ -9,16 +8,26 @@ import PtText from '../../components/AppTexts/PtText';
 import CardSection from '../../components/Misc/CardSection';
 import FormSection from '../../components/Misc/FormSection';
 import FooterButton from '../../components/Buttons/FooterButton';
+import CTACall from '../../components/CTA/CTACall';
+import CTAPetition from '../../components/CTA/CTAPetition';
+
 
 import colors from '../../config/colors';
 import useAuth from '../../provider/auth/useAuth';
 import routes from '../../navigation/routes';
+import LoadPage from '../../components/Misc/LoadPage';
 
 
-function IssueScreen({navigation, pages=[{content:'["f", [["h", "Summary"], ["c", [["s", "What is the Vacant Homes Tax?"], ["p", "1.25%  tax of the assessed value for a property  that sits empty for more than six months of the year"], ["p", "Revenue on acquiring land and resources for non profit and co-op housing, purchase a single room occupancy building to ensure it provided affordable housing, expand shelter capacity, help create renter advocacy services, and much more"]]], ["c", [["s","How will the tax affect Torontonians"], ["p","Toronto has about three times as many homes as Vancouver and so it’s estimated Toronto could collect upwards of $120 million a year from this tax that it could put towards affordable housing initiatives and other city services"]]]]]'},{content:'["c", [["h", "Summary"], ["c", [["s", "What is the Vacant Homes Tax?"], ["p", "1.25%  tax of the assessed value for a property  that sits empty for more than six months of the year"], ["p", "Revenue on acquiring land and resources for non profit and co-op housing, purchase a single room occupancy building to ensure it provided affordable housing, expand shelter capacity, help create renter advocacy services, and much more"]]], ["c", [["s","How will the tax affect Torontonians"], ["p","Toronto has about three times as many homes as Vancouver and so it’s estimated Toronto could collect upwards of $120 million a year from this tax that it could put towards affordable housing initiatives and other city services"]]]]]'}], title="pickle"}) {
+function IssueScreen({navigation, pages=[{content:'["f", [["h", "Summary"], ["c", [["s", "What is the Vacant Homes Tax?"], ["p", "1.25%  tax of the assessed value for a property  that sits empty for more than six months of the year"], ["p", "Revenue on acquiring land and resources for non profit and co-op housing, purchase a single room occupancy building to ensure it provided affordable housing, expand shelter capacity, help create renter advocacy services, and much more"]]], ["c", [["s","How will the tax affect Torontonians"], ["ctaC",'+JSON.stringify({"id": "4321","level": "Mayor"})+']]]]]'},{content:'["c", [["h", "Summary"], ["c", [["s", "What is the Vacant Homes Tax?"], ["p", "1.25%  tax of the assessed value for a property  that sits empty for more than six months of the year"], ["p", "Revenue on acquiring land and resources for non profit and co-op housing, purchase a single room occupancy building to ensure it provided affordable housing, expand shelter capacity, help create renter advocacy services, and much more"]]], ["c", [["s","How will the tax affect Torontonians"], ["p","Toronto has about three times as many homes as Vancouver and so it’s estimated Toronto could collect upwards of $120 million a year from this tax that it could put towards affordable housing initiatives and other city services"]]]]]'}], title="pickle"}) {
     //current page of issue
     const [page, setPage] = useState(1);
     const auth = useAuth();
+    const [loading, setLoading] = useState(false);
+
+    //refresh page on lo
+    useEffect(() => {
+        pages ? setLoading(false) : setLoading(true)
+    }, [pages]);
 
     //move this to providers along with issuePreviews
     const parsefun = (obj, index) => {
@@ -42,6 +51,10 @@ function IssueScreen({navigation, pages=[{content:'["f", [["h", "Summary"], ["c"
                 return(<StdText key={index}>{obj[1]}</StdText>)
             case "p":
                 return(<PtText key={index}>{obj[1]}</PtText>)
+            case "ctaP":
+                return(<CTAPetition key={index}>{obj[1]}</CTAPetition>)
+            case "ctaC":
+                return(<CTACall key={index} id={obj[1].id} level={obj[1].level}/>)
         }
     }
 
@@ -50,8 +63,8 @@ function IssueScreen({navigation, pages=[{content:'["f", [["h", "Summary"], ["c"
         setPage(p);
     }
 
-    return (
-        <>
+    return  (!loading ? 
+            <>
             <Card title={title} pages={pages} page={page} pageChange={handler}>
                 <View style={{flex:1}}>
                     {/*Issue Content*/}
@@ -67,8 +80,11 @@ function IssueScreen({navigation, pages=[{content:'["f", [["h", "Summary"], ["c"
                     } 
                 )}} style={{marginVertical:0, borderRadius:0}}/>
             }
-        </>
-    );
+            </>
+            :
+            <LoadPage></LoadPage>)
+            
+       
 }
 
 export default IssueScreen;

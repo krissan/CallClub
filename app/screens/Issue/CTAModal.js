@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, ScrollView } from 'react-native';
 import * as Yup from 'yup';
 
@@ -10,8 +10,17 @@ import SubmitButton from '../../components/Inputs/Form/SubmitButton';
 import StdText from '../../components/AppTexts/StdText';
 import FooterButton from '../../components/Buttons/FooterButton';
 import Body from '../../components/Layout/Body';
+import CTASearch from '../../components/CTA/CTASearch';
+import HeaderText from '../../components/AppTexts/HeaderText';
+import AppFormDatePicker from '../../components/Inputs/Form/AppFormDatePicker';
+
+import colors from '../../config/colors';
+import useCta from '../../provider/cta/useCta';
 
 function CTAModal({closeModal}) {
+    const [loading, setLoading] = useState(false);
+    const cta = useCta();
+
     {/*options for call CTA*/}
     const list = ["petition","call","volunteer"]
 
@@ -30,56 +39,43 @@ function CTAModal({closeModal}) {
     });
     
     //CTA Creation Form submit process
-    const handleSubmit = async ({ name, type, petition, call }) => {
+    const handleSubmit = async ({ name, type, petition, call, deadline }) => {
         //start loading
-        console.log(name);
-        console.log(type);
+        setLoading(true);
+
+        //create cta depending on type
         if(type=="petition"){
             console.log(petition);
+            cta.createCta(name, type, petition, deadline)
         }
         else if (type="call"){
-            console.log(call);
+            cta.createCta(name, type, call, deadline)
         }
-        //end loading
-    };
 
-    {/*Validation schema CTA Search Form*/}
-    const validationSchemaSearch = Yup.object().shape({
-        query: Yup.string().required().label("query")
-    });
+        //end loading
+        setLoading(false);
+    };
 
     return (
         <View style={{flexDirection:"column", flex: 1}}>
             <Body style={{flex:1}}>
+                {/*Search Form*/}
+                <HeaderText style={{paddingBottom:10}} txtColor={colors.secondary}>Search CTA</HeaderText>
+                <CTASearch handleSearch={closeModal} />
+                
                 <ScrollView>
-                    {/*Search Form*/}
-                    <AppForm
-                        initialValues={{ query:"" }}
-                        onSubmit={(values) => console.log(values)}
-                        validationSchema={validationSchemaSearch}>
-                        <AppFormField
-                            label="Search CTA"
-                            maxLength={50}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            name="query"
-                            />
-                        {/*Submit Search Query*/}
-                        <SubmitButton title="Search for CTA"/>
-                    </AppForm>
-
                     {/*Divider*/}
-                    <View style={{paddingVertical:20, alignItems:"center"}}>
+                    <View style={{paddingVertical:10, alignItems:"center"}}>
                         <StdText>OR</StdText>
                     </View>
 
                     {/*Create CTA Form*/}
                     <AppForm
-                        initialValues={{ name:"", type:list[0], petition:"", call:"Councillor" }}
+                        initialValues={{ name:"", type:"", petition:"", call:"Councillor", deadline:"" }}
                         onSubmit={(values) => handleSubmit(values)}
                         validationSchema={validationSchema}
                     >
-                        <StdText>Create CTA</StdText>
+                        <HeaderText style={{paddingBottom:10}} txtColor={colors.secondary}>Create CTA</HeaderText>
                         {/*CTA Creation Form Fields*/}
                         <AppFormField
                             label="Name"
@@ -93,10 +89,16 @@ function CTAModal({closeModal}) {
                             name="type"
                             label="Call to Action Type"
                         />
+                        
                         {/*Content dependent on type of cta being create*/}
                         <CTAFormSwitch></CTAFormSwitch>
+
+                        <AppFormDatePicker
+                            name="deadline"
+                            label="Dead Line Date"
+                        />
                         {/*Submit CTA Creation*/}
-                        <SubmitButton title="Create Call To Action"/>
+                        <SubmitButton title="Create Call To Action" loading={loading} />
                     </AppForm>
                 </ScrollView>
             </Body>

@@ -99,16 +99,16 @@ const IssueEditorScreen = ({route, navigation}) => {
                                         }}
                                     </FieldArray>
                                     
-                                    {/*Submit Issue Creation*/}
-                                    <SubmitButton title="Create Issue" />
-                                    
                                     {/*<Text>{JSON.stringify(values, null, 2)}</Text>
                                     <Text>{JSON.stringify(errors, null, 2)}</Text>*/}
                                 </ScrollView>
                             </FormSection>
                         </Card>
+
+                        {/*Submit Issue Creation*/}
+                        <SubmitButton title="Create Issue" style={{borderRadius:0, marginVertical:0}} />                        
                         {/*Launch Preview*/}
-                        <FooterButton title="Preview" onPress={() => {setPreview(true)}}></FooterButton>
+                        <FooterButton title="Preview" onPress={() => {setPreview(true)}}/>
                     </View>
                     :
                     //if in preview or cta modal mode

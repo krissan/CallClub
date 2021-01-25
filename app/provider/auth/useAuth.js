@@ -11,31 +11,35 @@ export default useAuth = () => {
 
   //update user address attribute in aws
   const updateAddress = async(address) => {
-    const user = await Auth.currentAuthenticatedUser();
-    await Auth.updateUserAttributes(user, {
-      'address': address
-    });
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      let response = await Auth.updateUserAttributes(user, {
+        'address': address
+      });
+      console.log("address updated "+ response);
+    } catch (error) {
+      console.log('error signing up:', error);
+    }
   }
 
   //sign up user to aws and store token
   const signUp = async(username, password, name, address) => {
     let authToken="sample" //dummy
     try {
-        const { user } = await Auth.signUp({
-            username,
-            password,
-            attributes: {
-                name,
-                address 
-            }
-        });
-        console.log(user);
-        setUser(user);
-        authStorage.storeToken(authToken);
-
-        
-    } catch (error) {
-        console.log('error signing up:', error);
+      const resp = await Auth.signUp({
+          username,
+          password,
+          attributes: {
+              name,
+              address 
+          }
+      });
+      console.log(1);
+      console.log(resp);
+    } 
+    catch (error) 
+    {
+      console.log('error signing up:', error);
     }
   }
 
@@ -77,5 +81,5 @@ export default useAuth = () => {
 
   };
 
-  return { user, logIn, logOut, signUp, checkAuth };
+  return { user, logIn, logOut, signUp, checkAuth, updateAddress };
 };

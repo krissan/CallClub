@@ -3,8 +3,8 @@ import { Text, View } from 'react-native';
 
 import Card from '../../components/Misc/Card';
 import HeaderText from '../../components/AppTexts/HeaderText';
-import CallButton from '../../components/Buttons/CallButton';
-import CBButton from '../../components/Buttons/CBButton';
+import CallButton from '../../components/CTA/CallButton';
+import CBButton from '../../components/CTA/CBButton';
 import PtText from '../../components/AppTexts/PtText';
 import CardSection from '../../components/Misc/CardSection';
 import { ScrollView } from 'react-native-gesture-handler';

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { View } from 'react-native';
 import * as Yup from 'yup';
 
@@ -20,12 +20,13 @@ const validationSchema = Yup.object().shape({
 
 function LoginScreen({navigation}) {
     const auth = useAuth();
+    const [loading, setLoading] = useState(false);
 
     //Form submit process
     const handleSubmit = async ({ email, password }) => {
-        //start loading
-        const result = await auth.logIn(email, password);
-        //end loading
+        setLoading(true);
+        await auth.logIn(email, password);
+        setLoading(false);
     };
 
      //Automatically navigate to issues if already logged in
@@ -61,7 +62,7 @@ function LoginScreen({navigation}) {
                         textContentType="password"
                     />
                     {/*Form Submit*/}
-                    <SubmitButton title="Login"/>
+                    <SubmitButton title="Login" loading={loading} />
                 </AppForm>
                 <View style={{flexDirection:"column", alignItems:"center", padding:5}}>
                     <StdText>Dont have an account? </StdText><LinkText onPress={()=>{navigation.navigate(routes.Register)}}>Create Account Here</LinkText>

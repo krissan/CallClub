@@ -14,6 +14,8 @@ import RoundPlusButton from '../../components/Buttons/RoundPlusButton';
 import CTAModal from './CTAModal';
 import PageInput from '../../components/Buttons/PageInput';
 
+import useIssue from '../../provider/issue';
+
 {/*Page input form field*/}
 const PageInputField = ({ field, form: { values, errors, handleBlur, handleChange } }) => {
     const name = field.name;
@@ -41,6 +43,7 @@ const PageInputField = ({ field, form: { values, errors, handleBlur, handleChang
 const IssueEditorScreen = ({route, navigation}) => {
     const [preview, setPreview] = useState(false);
     const [ctaModal, setCtaModal] = useState(false);
+    const issue = useIssue();
 
     const { pages, title } = route.params;
 
@@ -58,7 +61,7 @@ const IssueEditorScreen = ({route, navigation}) => {
     /*convert to use appform instead of formik*/
     /*todo*/
     return (
-            <Formik initialValues={{ title:title, pages: pages}} validationSchema={validationSchema} onSubmit={(values)=>{console.log(values)}}>
+            <Formik initialValues={{ title:title, pages: pages}} validationSchema={validationSchema} onSubmit={(values)=>{issue.createIssue({...values})}}>
                 {({ errors, values, touched, setFieldTouched, handleChange }) => (
                     //if not previewing or creating CTA
                     (!preview && !ctaModal) ?

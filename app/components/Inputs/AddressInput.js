@@ -19,78 +19,80 @@ function AddressInput({ touched, value, handleBlur, handlePress, wrapperPress, l
             formatted_address && inputRef.current?.setAddressText(value);*/
             inputRef.current?.setAddressText(value);
             inputRef.current?.focus();
-            console.log(inputRef.current);
         }
+        console.log("ADDresss")
+        console.log(value)
+
       }, [value]);
     
 
     return (
         <View style={{ padding: global.screenPad, flex:1, flexDirection:"column", justifyContent:"space-between"}}>
-            <View>
                 {/* Header */}
                 <StdText txtColor={inpColor} style={[styles.label,{fontWeight:"bold"}]}>
                     {label}
                 </StdText>
 
                 {/* Address Input input */}
-                <View style={{flexDirection:"row", width:"100%"}}>
+                <View style={{flexDirection:"row", width:"100%", height:"100%"}}>
                     <GooglePlacesAutocomplete
-                                ref={inputRef}
-                                placeholder= {'Search'}
-                                onPress={(data, details) => {
-                                    //geolocation + address for accuracy
-                                    //const geoLoc = details.geometry.location.lat+","+details.geometry.location.lng+","+details.formatted_address;
-                                    wrapperPress();
-                                    handlePress(details.formatted_address);
-                                    !touched && handleBlur(true);
-                                }}
-                                query={{
-                                    key: keys.placesApiKey,
-                                    language: 'en',
-                                }}
-                                fetchDetails={true}
-                                styles={{
-                                    container: {
-                                        flex:1
-                                    },
-                                    textInputContainer: {
-                                        flexDirection: 'row',
-                                    },
-                                    textInput: [
-                                        styles.stdField, {borderBottomColor: inpColor}
-                                    ],
-                                    poweredContainer: {
-                                        justifyContent: 'flex-end',
-                                        alignItems: 'center',
-                                        borderBottomRightRadius: 5,
-                                        borderBottomLeftRadius: 5,
-                                        borderColor: '#c8c7cc',
-                                        borderTopWidth: 0.5,
-                                    },
-                                    powered: {},
-                                    listView: {},
-                                    row: {
-                                        backgroundColor: '#FFFFFF',
-                                        padding: 13,
-                                        height: 44,
-                                        flexDirection: 'row',
-                                    },
-                                    separator: {
-                                        height: 0.5,
-                                        backgroundColor: '#c8c7cc',
-                                    },
-                                    description: {},
-                                    loader: {
-                                        flexDirection: 'row',
-                                        justifyContent: 'flex-end',
-                                        height: 20,
-                                    },
-                                }}
+                        ref={inputRef}
+                        placeholder= {'Search'}
+                        onPress={(data=null, details=null) => {
+                            //geolocation + address for accuracy
+                            //const geoLoc = details.geometry.location.lat+","+details.geometry.location.lng+","+details.formatted_address;
+                            console.log(details);
 
-                                {...otherProps}
-                                />  
+                            wrapperPress();
+                            handlePress(details.formatted_address);
+                            !touched && handleBlur(true);
+                        }}
+                        query={{
+                            key: keys.placesApiKey,
+                            language: 'en',
+                        }}
+                        fetchDetails={true}
+                        styles={{
+                            container: {
+                                flex:1
+                            },
+                            textInputContainer: {
+                                flexDirection: 'row',
+                            },
+                            textInput: [
+                                styles.stdField, {borderBottomColor: inpColor}
+                            ],
+                            poweredContainer: {
+                                justifyContent: 'flex-end',
+                                alignItems: 'center',
+                                borderBottomRightRadius: 5,
+                                borderBottomLeftRadius: 5,
+                                borderColor: '#c8c7cc',
+                                borderTopWidth: 0.5,
+                            },
+                            powered: {},
+                            row: {
+                                backgroundColor: '#FFFFFF',
+                                padding: 13,
+                                height: 44,
+                                flexDirection: 'row',
+                            },
+                            separator: {
+                                height: 0.5,
+                                backgroundColor: '#c8c7cc',
+                            },
+                            loader: {
+                                flexDirection: 'row',
+                                justifyContent: 'flex-end',
+                                height: 20,
+                            },  
+                        }}
+
+                        keyboardShouldPersistTaps="always"
+
+                        {...otherProps}
+                        />  
                 </View>
-            </View>
             {/*Display error if touched */}
             {/*<View style={{alignItems:'flex-end', height:global.inputBottomHeight }}>
                 { touched &&

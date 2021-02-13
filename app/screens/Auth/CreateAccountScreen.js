@@ -42,7 +42,7 @@ function CreateAccountScreen({navigation}) {
             <FormSection>
                 <AppForm
                     initialValues={{ email: "hadim23937@yutongdt.com", username: "fdsafdsa", password: "Hello123",confPassword: "Hello123", address:"370 McCowan Rd" }}
-                    onSubmit={(values) => {console.log(values);handleSubmit(values);}}
+                    onSubmit={(values) => {handleSubmit(values);}}
                     validationSchema={validationSchema}
                 >
                     {/*Form Fields*/}

@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import Clipboard from 'expo-clipboard';
 import * as Yup from 'yup';
 
-import useCta from '../../provider/cta/useCta';
-import { useState } from 'react/cjs/react.development';
+import useCta from '../../provider/cta';
 
 function CTASearch({handleSearch=()=>{}}) {
     const cta = useCta();
@@ -13,31 +12,31 @@ function CTASearch({handleSearch=()=>{}}) {
 
     //When Search Field is selected
     const onItemSelect = async(item) => {
-        console.log("-----------------item------------------");
+        //grab cta based on selected id
         const result = await cta.grabCTA(item.id);
-        console.log(result);
-        //set
+        //set clipboard to cta tag
         Clipboard.setString(result);
+        //run passed function
         handleSearch()
+        //Notify user cta tag is copied
         alert(result + " copied")
     }
 
     //When Search Field is selected
     const onTextChange = async(text) => {
-
-        console.log("-----------------text------------------");
+        //start loading
         setLoading(true);
-        setItems("1");
+        //search cta results based on text
         const result = await cta.searchCTA(text);
         setItems(result);
+        //end loading
         setLoading(false);
-        console.log(items);
     }
 
     {/*Validation schema CTA Search Form*/}
-    const validationSchemaSearch = Yup.object().shape({
+    /*const validationSchemaSearch = Yup.object().shape({
         query: Yup.string().required().label("query")
-    });
+    });*/
 
     return (
         <>

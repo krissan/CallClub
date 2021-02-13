@@ -1,39 +1,36 @@
-import React from 'react';
-import { View} from 'react-native';
-import DatePicker from 'react-native-date-picker'
+import React,{useState} from 'react';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment'
 
-import styles from './styles';
+import NonEditTextInput from './NonEditTextInput';
 
-import StdText from '..//AppTexts/StdText';
 import colors from '../../config/colors';
-import global from '../../config/global';
 
-function StdDatePicker({ label, value, inpColor= colors.text, phColor=colors.inert, txtColor=colors.text, touched=false, error, ...otherProps}) {
+function StdDatePicker({ label, value, onChange, inpColor= colors.text, phColor=colors.inert, txtColor=colors.text, touched=false, error, ...otherProps}) {
+    const [show, setShow] = useState(false);
+
+    //Change date value and hide picker
+    const changeAndHide = (e, selectedDate) => {
+        const currentDate = moment(selectedDate).format('YYYY-MM-DD') || value;
+        setShow(false);
+        onChange(currentDate);
+    }
 
     return (
-        <View style={{ paddingBottom:global.inputBottomPad}}>
-            {/* Header */}
-            <View style={{flexDirection:"row"}}>
-                {/* Label */}
-                <StdText txtColor={inpColor} style={[styles.label,{fontWeight:"bold"}]}>
-                    {label}
-                </StdText>
-            </View>
-            {/* Date input */}
-            <DatePicker
-                date={date}
-                onDateChange={setDate}
-                {...otherProps}
-                />
-            {/*Display error if touched */}
-            <View style={{alignItems:'flex-end', height:global.inputBottomHeight }}>
-                {   touched &&
-                <StdText txtColor={inpColor} style={[styles.inline]}>
-                    {error}
-                </StdText>
-                }
-            </View>
-        </View>        
+        <>
+            {/*Display date value and toggle date*/}
+            <NonEditTextInput label={label} value={value} onPress={()=>setShow(true)} />
+            {/*Show Picker if toggled on*/}
+            {show && 
+                // Date input
+                <DateTimePicker
+                    mode="date"
+                    display="default"
+                    value={new Date(moment(value))}
+                    onChange={changeAndHide}
+                    />
+            }
+        </>
     );
 }
 

@@ -9,23 +9,28 @@ import SubmitButton from '../../components/Inputs/Form/SubmitButton'
 import FormSection from '../../components/Misc/FormSection';
 import StdText from '../../components/AppTexts/StdText';
 import LinkText from '../../components/AppTexts/LinkText';
+
 import useAuth from '../../provider/auth/useAuth';
 import routes from '../../navigation/routes';
+import useAddr from '../../provider/address/useAddr';
 
 //Login form validation schema
 const validationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
     password: Yup.string().required().min(7).label("Password"),
-  });
+});
 
 function LoginScreen({navigation}) {
     const auth = useAuth();
+    const loc = useAddr();
+
     const [loading, setLoading] = useState(false);
 
     //Form submit process
     const handleSubmit = async ({ email, password }) => {
         setLoading(true);
         await auth.logIn(email, password);
+        await loc.setAddress(auth.user.attributes.address);
         setLoading(false);
     };
 
@@ -61,6 +66,7 @@ function LoginScreen({navigation}) {
                         secureTextEntry
                         textContentType="password"
                     />
+
                     {/*Form Submit*/}
                     <SubmitButton title="Login" loading={loading} />
                 </AppForm>

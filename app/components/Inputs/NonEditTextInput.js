@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TextInput, View} from 'react-native';
+import { Text, View} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import StdText from '../AppTexts/StdText';
@@ -11,8 +11,8 @@ import global from '../../config/global';
 function NonEditTextInput({ label, value, onPress, inpColor = colors.text, txtColor=colors.text}) {
 
     return (
-        <TouchableOpacity onPress={onPress}>
-            <View style={{ paddingBottom:global.inputBottomPad}}>
+        <TouchableOpacity onPress={onPress} >
+            <View style={{ paddingBottom:global.inputBottomPad}} >
                 {/* Header */}
                 <View style={{flexDirection:"row", justifyContent:"space-between"}}>
                     {/* Label */}

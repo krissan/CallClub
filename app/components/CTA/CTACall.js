@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { View, Linking } from "react-native";
+import { View, Linking, Alert } from "react-native";
 
 import StdText from "../AppTexts/StdText";
 import CallButton from "./CallButton";
@@ -7,9 +7,8 @@ import CBButton from "./CBButton";
 
 import styles from "./styles";
 
-function CTACall({id, level}) {
+function CTACall({id, level, handlesStatus=()=>{}}) {
     const [tel, setTel] = useState();
-    const [status, setStatus] = useState();
     const gov= useReps();
     const cta = useCta();
 
@@ -19,7 +18,7 @@ function CTACall({id, level}) {
         //setStatus("done")
         
         //refresh representative data on load
-        gov.reloadReps(); 
+        //gov.reloadReps(); 
     }, []);
 
     useEffect(() => {
@@ -39,28 +38,27 @@ function CTACall({id, level}) {
     }, [gov.reps]); 
 
     const handlePress = () => {
-        //initiate call
-        Linking.openURL(`tel:${tel}`)
+        if(tel)
+        {
+            //initiate call
+            Linking.openURL(`tel:${tel}`)
 
-        //send CTA was executed to server (user, id, maybe)  
-        cta.statusUpdate(id, "maybe");
+            //send CTA was executed to server (user, id, maybe)  
+            handlesStatus("maybe")
+        }
+        else
+        {
+            Alert.alert("Error","Sorry could not call number");
+        }
     }
 
-    return (<View>
-            {/*If status is not completed display cta otherwise display already completed view*/}
-            {!status ?
+    return (
             <View style={{height:100, flexDirection: "row",}}>
                 {/*Call Button*/}
                 <CallButton onPress={handlePress}/>
                 {/*Clipboard Button*/}
                 <CBButton cNumber={tel} />
             </View>
-            :
-            <View style={[styles.actionButton, {heigh:100}]}>
-                <StdText>Already Completed</StdText>
-            </View>
-            }
-        </View>
     );
 }
 

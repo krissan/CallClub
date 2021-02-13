@@ -3,14 +3,14 @@ import { useFormikContext } from "formik";
 
 import StdDatePicker from "../StdDatePicker";
 
-//Form select field
+//Form Date Picker field
 function AppFormDatePicker({ name, pickerList, ...otherProps }) {
-    const { values, setFieldTouched, handleChange, errors, touched } = useFormikContext();
+    const { values, setFieldTouched, setFieldValue, errors, touched } = useFormikContext();
 
     return (
             <StdDatePicker
                 onBlur={() => setFieldTouched(name)}
-                onChange={handleChange(name)}
+                onChange={(value)=> setFieldValue(name, value)}
                 error={errors[name]}
                 touched={touched[name]}
                 value={values[name]}

@@ -6,6 +6,11 @@ const styles = StyleSheet.create({
     justifyContent:"center", 
     alignItems:"center"
   },
+  placeHolder: {
+    justifyContent:"center", 
+    alignItems:"center",
+    height:100
+  },
 });
 
 export default styles;

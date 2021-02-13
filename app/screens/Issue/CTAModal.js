@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { View, ScrollView } from 'react-native';
 import * as Yup from 'yup';
+import moment from 'moment';
 
 import AppForm from '../../components/Inputs/Form/AppForm';
 import AppFormField from '../../components/Inputs/Form/AppFormField';
@@ -13,9 +14,10 @@ import Body from '../../components/Layout/Body';
 import CTASearch from '../../components/CTA/CTASearch';
 import HeaderText from '../../components/AppTexts/HeaderText';
 import AppFormDatePicker from '../../components/Inputs/Form/AppFormDatePicker';
+import AppFormValues from '../../components/Inputs/Form/AppFormValues';
 
 import colors from '../../config/colors';
-import useCta from '../../provider/cta/useCta';
+import useCta from '../../provider/cta';
 
 function CTAModal({closeModal}) {
     const [loading, setLoading] = useState(false);
@@ -28,6 +30,7 @@ function CTAModal({closeModal}) {
     const validationSchema = Yup.object().shape({
         name: Yup.string().required().label("Name"),
         type: Yup.string().required().label("Type"),
+        deadline: Yup.date().required().label("Dead Line"),
         petition: Yup.string().label("Petition").when("type", {
             is: "petition",
             then: Yup.string().required()
@@ -45,7 +48,6 @@ function CTAModal({closeModal}) {
 
         //create cta depending on type
         if(type=="petition"){
-            console.log(petition);
             cta.createCta(name, type, petition, deadline)
         }
         else if (type="call"){
@@ -71,7 +73,7 @@ function CTAModal({closeModal}) {
 
                     {/*Create CTA Form*/}
                     <AppForm
-                        initialValues={{ name:"", type:"", petition:"", call:"Councillor", deadline:"" }}
+                        initialValues={{ name:"", type:"", petition:"", call:"Councillor", deadline: moment().format('YYYY-MM-DD') }}
                         onSubmit={(values) => handleSubmit(values)}
                         validationSchema={validationSchema}
                     >
@@ -97,6 +99,9 @@ function CTAModal({closeModal}) {
                             name="deadline"
                             label="Dead Line Date"
                         />
+
+                        <AppFormValues></AppFormValues>
+                        
                         {/*Submit CTA Creation*/}
                         <SubmitButton title="Create Call To Action" loading={loading} />
                     </AppForm>

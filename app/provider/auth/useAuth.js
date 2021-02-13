@@ -3,11 +3,13 @@ import { Auth } from "aws-amplify";
 
 import AuthContext from "./context";
 import authStorage from "./storage";
+import useAddr from "../address/useAddr";
 
 //define auth context and functions to access and modify it
 export default useAuth = () => {
   //define auth context
   const { user, setUser } = useContext(AuthContext);
+  const loc = useAddr();
 
   //update user address attribute in aws
   const updateAddress = async(address) => {
@@ -16,6 +18,8 @@ export default useAuth = () => {
       let response = await Auth.updateUserAttributes(user, {
         'address': address
       });
+
+      loc.setAddress(address);
       console.log("address updated "+ response);
     } catch (error) {
       console.log('error signing up:', error);
@@ -34,8 +38,6 @@ export default useAuth = () => {
               address 
           }
       });
-      console.log(1);
-      console.log(resp);
     } 
     catch (error) 
     {
@@ -43,14 +45,21 @@ export default useAuth = () => {
     }
   }
 
-  //login user with aws and store token
+  //login user with aws, store token and update address
   const logIn = async(email, password) => {
     let authToken="sample"//dummy
 
     try {
+      //get user
       const user = await Auth.signIn(email, password);
       setUser(user);
+
+      //set auth token
       authStorage.storeToken(authToken);
+
+      //keep app address up to date
+      loc.setAddress(user.attributes.address)
+
       return user
     } catch (error) {
         console.log('error signing in', error);
@@ -73,7 +82,10 @@ export default useAuth = () => {
   const checkAuth = async() => {
     try {
       const user = await Auth.currentAuthenticatedUser();
-      console.log("check");
+
+      //keep app address up to date
+      loc.setAddress(user.attributes.address)
+
       setUser(user);
     } catch (error) {
         console.log('error checking auth: ', error);
@@ -81,5 +93,11 @@ export default useAuth = () => {
 
   };
 
-  return { user, logIn, logOut, signUp, checkAuth, updateAddress };
+  const getAuthToken = async() => {
+    return Auth.currentSession().then(res=>{
+      return res.getIdToken().jwtToken
+    })
+  }
+
+  return { user, logIn, logOut, signUp, checkAuth, updateAddress, getAuthToken };
 };

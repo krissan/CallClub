@@ -12,11 +12,11 @@ export default function DrawerContent({navigation}){
 
     return(<View style={[styles.content]}>
         {auth.user ?
-            <LinkText style={{paddingVertical:5}} onPress={()=>navigation.navigate(routes.Account)}>Account</LinkText>
+            <LinkText style={{paddingVertical:5}} onPress={()=>navigation.push(routes.Account)}>Account</LinkText>
             :
-            <LinkText style={{paddingVertical:5}} onPress={()=>navigation.navigate(routes.Login)}>Login</LinkText>
+            <LinkText style={{paddingVertical:5}} onPress={()=>navigation.push(routes.Login)}>Login</LinkText>
         }
-        <LinkText style={{paddingVertical:5}} onPress={()=>navigation.navigate(routes.Issues)}>Issue</LinkText>
-        <LinkText style={{paddingVertical:5}} onPress={()=>navigation.navigate(routes.Representatives)}>Representative</LinkText>
+        <LinkText style={{paddingVertical:5}} onPress={()=>navigation.push(routes.Issues)}>Issue</LinkText>
+        <LinkText style={{paddingVertical:5}} onPress={()=>navigation.push(routes.Representatives)}>Representative</LinkText>
     </View>)
 }

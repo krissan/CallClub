@@ -23,27 +23,23 @@ function AddressInputWrapper({ touched, value, handleBlur, handlePress, label, i
             /*const formatted_address = value.split(",",3)[2]
             formatted_address && inputRef.current?.setAddressText(value);*/
             inputRef.current?.setAddressText(value);
-            console.log(inputRef.current);
         }
       }, [value]);
     
-
+    //open address modal
     const openModal = () => {
         setVisibility(true);
-        console.log('-------------------------------------------------------');
-        console.log(value)
-        console.log(inputRef)
-        //inputRef.current?.setAddressText(value);
-        //inputRef.focus();
     }
 
     return (
-        <>
+        <View style={{width:"100%"}}>
+            {/*Address text and modal opener*/}
             <NonEditTextInput
                 label={label}
-                value={value}
+                value={value ? value : "No Address"}
                 onPress={openModal}
             />
+            {/*Address input modal*/}
             <Modal visible={visibility}>
                     <AddressInput label={label} value={value} touched={touched} inpColor={inpColor} handleBlur={handleBlur} handlePress={handlePress} wrapperPress={()=>{setVisibility(false)}} modalClose={()=>{setVisibility(false)}} error="" {...otherProps} />
                     <FooterButton title={"Close Modal"} onPress={()=>{setVisibility(false)}}  />
@@ -56,7 +52,7 @@ function AddressInputWrapper({ touched, value, handleBlur, handlePress, label, i
                 </StdText>
                 }
             </View>*/}
-        </>      
+        </View>      
     );
 }
 

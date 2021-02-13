@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import * as Yup from 'yup';
 
@@ -9,9 +9,10 @@ import AppFormField from '../../components/Inputs/Form/AppFormField'
 import SubmitButton from '../../components/Inputs/Form/SubmitButton'
 import StdText from '../../components/AppTexts/StdText';
 import LinkText from '../../components/AppTexts/LinkText';
+import AddressFormField from '../../components/Inputs/Form/AddressFormField';
+import FormValues from '../../components/Inputs/Form/FormValues';
 
 import routes from '../../navigation/routes';
-
 
 //Account Creation form validation schema
 const validationSchema = Yup.object().shape({
@@ -24,25 +25,24 @@ const validationSchema = Yup.object().shape({
 
 function CreateAccountScreen({navigation}) {
     const auth = useAuth();
+    const [loading, setLoading] = useState(false);
 
     //Form submit process
     const handleSubmit = async ({ email, username, password, address }) => {
+        setLoading(true);
+
         await auth.signUp(email, password, username, address);
-      };
-
-    //Automatically navigate to issues if already logged in
-    useEffect(() => {
-        console.log(auth.user)
-        auth.user && navigation.navigate(routes.Issues) 
-    }, [auth.user])
-
+        navigation.navigate(routes.Login);
+        c
+        setLoading(false);
+    };
 
     return (
         <Card title="Account Creation">
             <FormSection>
                 <AppForm
-                    initialValues={{ email: "hadim23937@yutongdt.com", username: "fdsafdsa", password: "Hello123",confPassword: "Hello123", address:"fsadf fdfd" }}
-                    onSubmit={(values) => {console.log(values);handleSubmit(values);}}
+                    initialValues={{ email: "hadim23937@yutongdt.com", username: "fdsafdsa", password: "Hello123",confPassword: "Hello123", address:"370 McCowan Rd" }}
+                    onSubmit={(values) => {handleSubmit(values);}}
                     validationSchema={validationSchema}
                 >
                     {/*Form Fields*/}
@@ -80,15 +80,13 @@ function CreateAccountScreen({navigation}) {
                         secureTextEntry
                         textContentType="password"
                     />
-                    <AppFormField
+                    <AddressFormField
                         label="Address"
-                        maxLength={50}
-                        autoCapitalize="none"
-                        autoCorrect={false}
                         name="address"
                     />
                     {/*Form Submit*/}
-                    <SubmitButton title="Create Account" />
+                    <SubmitButton title="Create Account" loading={loading} />
+                    <FormValues></FormValues>
                 </AppForm>
                 {/*Navigate to login option*/}
                 <View style={{flexDirection:"column", alignItems:"center", padding:5}}>

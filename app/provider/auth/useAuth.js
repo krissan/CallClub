@@ -3,50 +3,63 @@ import { Auth } from "aws-amplify";
 
 import AuthContext from "./context";
 import authStorage from "./storage";
+import useAddr from "../address/useAddr";
 
-//define auth context and functions to modify it
+//define auth context and functions to access and modify it
 export default useAuth = () => {
   //define auth context
   const { user, setUser } = useContext(AuthContext);
+  const loc = useAddr();
 
   //update user address attribute in aws
-  const updateAddress = async() => {
-    const user = await Auth.currentAuthenticatedUser();
-    await Auth.updateUserAttributes(user, {
-      'address': '105 Main St. New York, NY 10001'
-    });
+  const updateAddress = async(address) => {
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      let response = await Auth.updateUserAttributes(user, {
+        'address': address
+      });
+
+      loc.setAddress(address);
+      console.log("address updated "+ response);
+    } catch (error) {
+      console.log('error signing up:', error);
+    }
   }
 
   //sign up user to aws and store token
   const signUp = async(username, password, name, address) => {
     let authToken="sample" //dummy
-
     try {
-        const { user } = await Auth.signUp({
-            username,
-            password,
-            attributes: {
-                name,
-                address 
-            }
-        });
-        setUser(user);
-        authStorage.storeToken(authToken);
-
-        
-    } catch (error) {
-        console.log('error signing up:', error);
+      const resp = await Auth.signUp({
+          username,
+          password,
+          attributes: {
+              name,
+              address 
+          }
+      });
+    } 
+    catch (error) 
+    {
+      console.log('error signing up:', error);
     }
   }
 
-  //login user with aws and store token
+  //login user with aws, store token and update address
   const logIn = async(email, password) => {
     let authToken="sample"//dummy
 
     try {
+      //get user
       const user = await Auth.signIn(email, password);
       setUser(user);
+
+      //set auth token
       authStorage.storeToken(authToken);
+
+      //keep app address up to date
+      loc.setAddress(user.attributes.address)
+
       return user
     } catch (error) {
         console.log('error signing in', error);
@@ -69,8 +82,10 @@ export default useAuth = () => {
   const checkAuth = async() => {
     try {
       const user = await Auth.currentAuthenticatedUser();
-      console.log("check");
-      console.log(user);
+
+      //keep app address up to date
+      loc.setAddress(user.attributes.address)
+
       setUser(user);
     } catch (error) {
         console.log('error checking auth: ', error);
@@ -78,5 +93,11 @@ export default useAuth = () => {
 
   };
 
-  return { user, logIn, logOut, signUp, checkAuth };
+  const getAuthToken = async() => {
+    return Auth.currentSession().then(res=>{
+      return res.getIdToken().jwtToken
+    })
+  }
+
+  return { user, logIn, logOut, signUp, checkAuth, updateAddress, getAuthToken };
 };

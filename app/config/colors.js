@@ -5,5 +5,6 @@ export default {
     negative: '#CB6969',
     mainBackground: '#EBEBEB',
     inert: '#D6D6D6',
-    text: '#707070'
+    text: '#707070',
+    action: '#8BCD98'
 }

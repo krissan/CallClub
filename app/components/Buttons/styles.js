@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingHorizontal: 10,
     fontWeight: "bold",
-    width:"100%"
+    width:"100%",
+    height:60
   },
   footerButton: {
     width:"100%", 
@@ -38,11 +39,6 @@ const styles = StyleSheet.create({
     width:40,
     justifyContent:"center",
     alignItems: "center",
-  },
-  actionButton: {
-    flex:1, 
-    justifyContent:"center", 
-    alignItems:"center"
   },
   /*Trapezoid button*/
   pageTab: {

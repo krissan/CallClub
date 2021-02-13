@@ -3,9 +3,9 @@ import { TouchableOpacity } from "react-native";
 import { Feather } from '@expo/vector-icons'
 
 import colors from "../../config/colors";
-import styles from "./styles";
+import styles from "../Buttons/styles";
 
-function CallButton( style, cNumber, bgColor=colors.primary, txtColor=colors.tertiary) {
+function CTAPetition(id, petition, handleStatus=()=>{}) {
   return (
     <TouchableOpacity style={[style, styles.actionButton, {backgroundColor: bgColor}]} onPress={() =>{console.log("called "+cNumber)}}>
         <Feather name="phone-call" size={32} color={txtColor} />
@@ -13,4 +13,4 @@ function CallButton( style, cNumber, bgColor=colors.primary, txtColor=colors.ter
   );
 }
 
-export default CallButton;
+export default CTAPetition;

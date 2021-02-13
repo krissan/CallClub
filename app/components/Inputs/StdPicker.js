@@ -12,7 +12,7 @@ function StdPicker({style, label, value, list, onChange, bgColor=colors.primary,
   return (
     <View style={{flexDirection:"column", paddingBottom:global.inputBottomHeight}}>
       {/*Label*/}
-      <StdText style={{paddingBottom:10}}>{label}</StdText>
+      <StdText style={[styles.label, {fontWeight:"bold", paddingBottom:10}]}>{label}</StdText>
       {/*Options displayed in a row*/}
       <View style={{flexDirection:"row",flexWrap:"wrap"}}>
         {list.map((val, index) => {

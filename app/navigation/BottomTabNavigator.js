@@ -8,7 +8,7 @@ import IssueNavigator from "./screenNavigators/IssueNavigator";
 import AccountNavigator from "./screenNavigators/AccountNavigator";
 
 import colors from "../config/colors";
-import useAuth from "../auth/useAuth";
+import useAuth from "../provider/auth/useAuth";
 import routes from "./routes";
 
 const Tab = createMaterialBottomTabNavigator();
@@ -27,17 +27,18 @@ const BottomTabNavigator = () => {
         options={{
           tabBarLabel: 'Reps',
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="account-balance" size={22} color={color} />
+            <MaterialIcons name="account-balance" size={18} color={color} />
           ),
         }}
       />
+      
       <Tab.Screen
         name={routes.Issues}
         component={IssueNavigator}
         options={{
           tabBarLabel: 'Issue',
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 name="fist-raised" size={22} color={color} />
+            <FontAwesome5 name="fist-raised" size={18} color={color} />
           ),
         }}
       />
@@ -49,7 +50,7 @@ const BottomTabNavigator = () => {
           options={{
             tabBarLabel: 'Account',
             tabBarIcon: ({ color }) => (
-              <FontAwesome5 name="user-alt" size={22} color={color} />
+              <FontAwesome5 name="user-alt" size={18} color={color} />
             ),
           }}
         />

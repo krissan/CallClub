@@ -29,12 +29,7 @@ function CTAFormSwitch() {
                             label="Call to Action Type"
                         />
             default:
-                return <AppFormField
-                                label=""
-                                maxLength={50}
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                name="petition"/>
+                return <></>
         }
     }
     

@@ -1,5 +1,5 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState } from 'react';
+import { View, ScrollView } from 'react-native';
 import * as Yup from 'yup';
 
 import Card from '../../components/Misc/Card';
@@ -39,6 +39,7 @@ function CreateAccountScreen({navigation}) {
 
     return (
         <Card title="Account Creation">
+            <ScrollView>
             <FormSection>
                 <AppForm
                     initialValues={{ email: "hadim23937@yutongdt.com", username: "fdsafdsa", password: "Hello123",confPassword: "Hello123", address:"370 McCowan Rd" }}
@@ -93,6 +94,7 @@ function CreateAccountScreen({navigation}) {
                     <StdText>Already have an account?  </StdText><LinkText onPress={()=>{navigation.navigate(routes.Login)}}>Login Here</LinkText>
                 </View>
             </FormSection>
+            </ScrollView>
         </Card>
     );
 }

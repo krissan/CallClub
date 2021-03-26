@@ -1,5 +1,4 @@
 import React, {useState,useEffect} from 'react';
-import { View } from 'react-native';
 import * as Yup from 'yup';
 
 import useAddr from '../../../provider/address/useAddr';
@@ -26,7 +25,7 @@ function AddressForm() {
     const handleSubmit = async ({ address }) => {
         setLoading(true);
 
-        if (auth)
+        if (auth.user)
         {
             await auth.updateAddress(address);
             alert("Address Updated");
@@ -38,24 +37,22 @@ function AddressForm() {
             alert("Address Updated");
         }
 
-        gov.reloadReps();
-
         setLoading(false);
+
+        await gov.reloadReps();
     };
 
     useEffect(()=>{
         if(auth.user){
-            console.log("attr");
             setAddress(auth.user.attributes.address);
         }else if (loc.addr){
-            console.log("loc")
             setAddress(loc.addr);
         }
-        console.log(address)
     },[])
 
     //display account information if user exists
     return(
+        <>
         <AppForm enableReinitialize
             initialValues={{ address: address}}
             onSubmit={(values) => {handleSubmit(values);}}
@@ -66,6 +63,7 @@ function AddressForm() {
             {/*Form Submit*/}
             <SubmitButton title="Update Address" loading={loading} />
         </AppForm>
+        </>
     );
 }
 

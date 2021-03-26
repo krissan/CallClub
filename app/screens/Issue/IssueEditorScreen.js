@@ -14,7 +14,7 @@ import RoundPlusButton from '../../components/Buttons/RoundPlusButton';
 import CTAModal from './CTAModal';
 import PageInput from '../../components/Buttons/PageInput';
 
-import useIssue from '../../provider/issue';
+import useIssue from '../../provider/issue/issue';
 
 {/*Page input form field*/}
 const PageInputField = ({ field, form: { values, errors, handleBlur, handleChange } }) => {

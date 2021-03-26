@@ -8,7 +8,6 @@ import HeaderDivider from '../components/Misc/HeaderDivider';
 import LabeledItem from '../components/Misc/LabeledItem';
 import LoadPage from '../components/Misc/LoadPage';
 
-import colors from '../config/colors';
 import global from '../config/global';
 import useAddr from '../provider/address/useAddr';
 import useReps from '../provider/rep/useReps';
@@ -20,9 +19,13 @@ function RepresentativeScreen({navigation}) {
 
     //refresh representative data on load
     useEffect(() => {
-        setLoading(true);
-        gov.reloadReps();
-        setLoading(false);
+        const reloadReps = async() => {
+            setLoading(true);
+            await gov.reloadReps();
+            setLoading(false);
+        }
+
+        reloadReps();
     }, [loc.addr]);
 
     return(
@@ -30,10 +33,9 @@ function RepresentativeScreen({navigation}) {
             <AddressForm />
             {!loading ?
                 <>
-                    {gov.reps == [] ?
+                    {gov.reps && gov.reps != [] ?
                         <ScrollView style={{padding:global.screenPad}}>
                                 {/*Page Header*/}
-                                <HeaderText txtColor={colors.secondary}>Representatives</HeaderText>
                                 {gov.reps && gov.reps.map((rep, index) => {
                                     return(
                                     //Representative data

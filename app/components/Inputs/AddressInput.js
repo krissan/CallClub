@@ -20,9 +20,6 @@ function AddressInput({ touched, value, handleBlur, handlePress, wrapperPress, l
             inputRef.current?.setAddressText(value);
             inputRef.current?.focus();
         }
-        console.log("ADDresss")
-        console.log(value)
-
       }, [value]);
     
 

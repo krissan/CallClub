@@ -1,21 +1,60 @@
 import { useContext } from "react";
 import useAddr from "../address/useAddr";
 import RepContext from "./context";
+import useAuth from "../auth/useAuth";
+import { Alert } from "react-native";
 
 //create and define Representative context and functions to access  and modify it
 export default useReps = () => {
   //define Rep context
   const { reps, setReps } = useContext(RepContext);
-
+  const auth = useAuth();
   const loc = useAddr();
 
   //load representatives based on users address
   const reloadReps = async() => {
     try {
+        let idToken = await auth.getAuthToken();
         //Type of Reps you want to grab
         let repTypes = ["Councillor", "Mayor"];
 
-        console.log("grab representatives based on " + loc.addr);
+        console.log('reerere');
+        console.log(idToken);
+
+        let response;
+        await fetch(
+          `http://10.0.2.2:8081/representative?address='`+loc.addr+`'`,{
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': "Bearer "+idToken
+            }
+          }).then(
+            response =>  response.json()
+          ).then(data => {
+              response = data;
+          });
+
+          console.log(response);
+        let data = response.map((rep)=>{
+          
+          return {
+            photo: rep.photo_url,
+            name:rep.name,
+            district:rep.district_name,
+            party:  rep.party_name,
+            number: rep.tel,
+            gender: rep.gender,
+            email: rep.email,
+            website:rep.url,
+            elected_office: rep.elected_office
+          }
+        });
+     
+        await setReps(data);
+
         //if user is logged in use their address to find representative data
           /* // commented client side grabbing representative data
           
@@ -57,7 +96,7 @@ export default useReps = () => {
 
           setReps(data);*/
       } catch (error) {
-        console.error(error);
+        Alert(error);
       }
   }
 

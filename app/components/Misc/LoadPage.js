@@ -6,7 +6,7 @@ import colors from '../../config/colors';
 
 function LoadPage({color=colors.primary, size='large'}) {
     return (
-        <View style={{justifyContent:"center", alignItems:"center", flex:1}}>
+        <View style={{ flex:1, justifyContent:'center', alignItems:'center'}}>
             <ActivityIndicator color={color} size={size} />
         </View>
     );

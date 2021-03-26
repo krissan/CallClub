@@ -11,5 +11,6 @@ export default {
     bodyHeight: Dimensions.get('window').height - StatusBar.currentHeight,
     inputBottomHeight:20,
     inputBottomPad:5,
-    primFont: Platform.OS === "android" ? "Roboto" : "Avenir"
+    primFont: Platform.OS === "android" ? "Roboto" : "Avenir",
+    bottomTabHeight:150
 }
